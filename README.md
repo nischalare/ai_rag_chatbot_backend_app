@@ -81,9 +81,7 @@ venv\Scripts\activate
 ### 2️⃣ Install Dependencies
 
 ```
-pip install fastapi uvicorn pydantic python-dotenv \
-langchain langchain-classic langchain-openai \
-langchain-community chromadb pypdf
+pip install fastapi uvicorn pydantic python-dotenv langchain langchain-classic langchain-openai langchain-community chromadb pypdf
 ```
 
 ### 3️⃣ Add PDFs
