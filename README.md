@@ -1,120 +1,159 @@
-# 🧠 AI RAG Chatbot Backend  
-**Memory • Retrieval-Augmented Generation (RAG) • FastAPI • LangChain • Vector DB**
+# 🧠 AI RAG Chatbot Backend
 
----
+**Enterprise AI • Memory • RAG • JWT Auth • PostgreSQL • ChromaDB**
 
-## 📌 Project Overview
+------------------------------------------------------------------------
 
-This project implements an **enterprise-grade backend for a Conversational AI Chatbot** using **FastAPI** and **LangChain**.
+# 📌 Project Overview
 
-The chatbot supports:
+This project implements a **Production-Ready Enterprise AI RAG Backend**
+built using:
 
-- ✅ Session-based conversational memory
-- ✅ Retrieval Augmented Generation (RAG) using PDFs
-- ✅ Vector search using ChromaDB
-- ✅ Source citations with answers
-- ✅ Extensible architecture (Auth, Streaming, Tools ready)
+-   🔐 JWT Authentication (Role-Based)
+-   🧠 Conversational Memory
+-   📄 Retrieval-Augmented Generation (RAG) from PDFs
+-   🗄️ PostgreSQL Database Persistence
+-   📊 Token Usage Analytics
+-   🔎 Swagger API Documentation
+-   📦 Persistent ChromaDB Vector Store
 
----
+This is **not a demo chatbot** --- it is a scalable backend architecture
+suitable for enterprise AI systems.
 
-## 🏗️ Architecture
+------------------------------------------------------------------------
 
-Client → FastAPI → LangChain (Memory + RAG) → ChromaDB → Documents
+# 🏗️ Architecture
 
----
+Client → FastAPI → JWT Auth → LangChain (Memory + RAG)\
+↓\
+PostgreSQL (Users + Chat + Analytics)\
+↓\
+ChromaDB (Persistent Vector Store)\
+↓\
+PDF Knowledge Base
 
-## 🧰 Tech Stack
+------------------------------------------------------------------------
 
-- FastAPI  
-- LangChain (classic + openai)  
-- OpenAI  
-- ChromaDB  
-- PyPDF  
-- Uvicorn  
-- Python 3.10+  
+# 🧰 Tech Stack
 
----
+## Backend
 
-## 📁 Folder Structure
+-   FastAPI\
+-   LangChain\
+-   OpenAI\
+-   ChromaDB (Persistent)\
+-   PyPDF\
+-   PostgreSQL\
+-   SQLAlchemy\
+-   JWT (python-jose)\
+-   Passlib (bcrypt)\
+-   Uvicorn
 
-```
+------------------------------------------------------------------------
+
+# 📁 Actual Project Structure
+
 ai_rag_chatbot_backend/
-├── app.py
-├── config.py
-├── database.py
-├── models.py
-├── auth/
-├── memory/
-├── rag/
-├── tools/
-├── analytics/
-├── streaming/
-├── utils/
-├── data/
-├── vectorstore/
-├── .env
-└── README.md
+│
+├── app.py                  # Main FastAPI application
+├── config.py               # Environment & configuration settings
+├── database.py             # PostgreSQL connection setup
+├── models.py               # SQLAlchemy models (Users, ChatHistory, TokenAnalytics)
+├── create_tables.py        # DB table creation script
+├── .env                    # Environment variables
+├── README.md
+│
+├── auth/                   # 🔐 Authentication & JWT
+│   ├── auth_router.py
+│   ├── dependencies.py
+│   ├── jwt.py
+│   ├── security.py
+│
+├── analytics/              # 📊 Token & Admin Analytics
+│   ├── analytics_router.py
+│   ├── analytics_service.py
+│
+├── memory/                 # 🧠 Conversation Memory
+│   ├── memory_manager.py
+│
+├── rag/                    # 📄 Retrieval-Augmented Generation
+│   ├── __init__.py
+│   ├── ingest.py
+│   ├── qa_chain.py
+│   ├── vectorstore.py
+│
+├── tools/                  # 🛠 AI Tools (Extensible)
+│   ├── calculator.py
+│   ├── weather_tool.py
+│   ├── web_search.py
+│
+├── streaming/              # ⚡ Streaming Support
+│
+├── utils/                  # 🔧 LLM Utilities
+│   ├── llm.py
+│
+├── data/                   # 📚 Source Documents (PDFs)
+│   ├── company_docs.pdf
+│   ├── SD0109_Chatbots.pdf
+│
+├── vectorstore/            # 🗂 ChromaDB Persistent Storage
+│   └── chroma/
+│       └── chroma.sqlite3  # Persistent vector database
+│
+├── logs/                   # 📝 Application Logs
+│   └── app.log
+│
+├── venv/                   # Python virtual environment
+└── __pycache__/
+
+
+------------------------------------------------------------------------
+
+# 🔐 Role-Based Authentication & Authorization
+
+## 👤 User Registration
+
+POST `/auth/register`
+
+``` json
+{
+  "email": "user@email.com",
+  "password": "securepassword",
+  "role": "USER"
+}
 ```
 
----
+## 🔑 User Login
 
-## 🔐 Environment Variables
+POST `/auth/login`
 
-Create a `.env` file:
-
-```
-OPENAI_API_KEY=your_openai_api_key_here
-CHROMA_PERSIST_DIR=vectorstore
-```
-
----
-
-## ▶️ Step-by-Step Setup
-
-### 1️⃣ Create Virtual Environment
-
-```
-python -m venv venv
-venv\Scripts\activate
+``` json
+{
+  "email": "user@email.com",
+  "password": "securepassword"
+}
 ```
 
-### 2️⃣ Install Dependencies
+Response:
 
-```
-pip install fastapi uvicorn pydantic python-dotenv langchain langchain-classic langchain-openai langchain-community chromadb pypdf
-```
-
-### 3️⃣ Add PDFs
-
-Place PDFs inside:
-```
-data/
+``` json
+{
+  "access_token": "jwt_token_here",
+  "token_type": "bearer"
+}
 ```
 
-### 4️⃣ Ingest Documents
+Send JWT in headers:
 
-```
-python rag/ingest.py
-```
+    Authorization: Bearer <token>
 
-### 5️⃣ Run Server
+------------------------------------------------------------------------
 
-```
-uvicorn app:app --reload
-```
-
-Open:
-```
-http://127.0.0.1:8000/docs
-```
-
----
-
-## 🧪 Test API
+# 🤖 Chat Endpoint
 
 POST `/chat`
 
-```
+``` json
 {
   "message": "What is RAG?",
   "session_id": "test-1",
@@ -122,4 +161,97 @@ POST `/chat`
 }
 ```
 
----
+Response:
+
+``` json
+{
+  "user": "user@email.com",
+  "session_id": "test-1",
+  "reply": "RAG stands for Retrieval-Augmented Generation...",
+  "tokens": {
+    "prompt": 1052,
+    "completion": 9,
+    "total": 1061,
+    "cost": 0.001596
+  },
+  "sources": []
+}
+```
+
+------------------------------------------------------------------------
+
+# 📊 Analytics Endpoints
+
+GET `/analytics/summary`\
+GET `/analytics/admin` (Admin Only)
+
+------------------------------------------------------------------------
+
+# 🧪 How to Test APIs
+
+1️⃣ Register user via `/auth/register`\
+2️⃣ Login via `/auth/login`\
+3️⃣ Click **Authorize** in Swagger and paste:
+
+    Bearer your_token_here
+
+4️⃣ Test `/chat` endpoint
+
+------------------------------------------------------------------------
+
+# 🔐 Environment Variables
+
+Create `.env`:
+
+    OPENAI_API_KEY=your_openai_api_key_here
+    CHROMA_PERSIST_DIR=vectorstore
+    DATABASE_URL=your_postgresql_connection_string
+    SECRET_KEY=your_jwt_secret_key
+
+------------------------------------------------------------------------
+
+# ▶️ Backend Setup
+
+``` bash
+python -m venv venv
+venv\Scripts\activate
+pip install fastapi uvicorn pydantic python-dotenv 
+langchain langchain-classic langchain-openai 
+langchain-community chromadb pypdf psycopg2 
+python-jose[cryptography] passlib[bcrypt] 
+pydantic[email] sqlalchemy
+python create_tables.py
+python rag/ingest.py
+uvicorn app:app --reload
+```
+
+Open:
+
+http://127.0.0.1:8000/docs
+
+------------------------------------------------------------------------
+
+# 🚀 Enterprise Capabilities
+
+-   JWT Authentication\
+-   Role-Based Access Control\
+-   PostgreSQL Conversation Storage\
+-   Persistent Chroma Vector DB\
+-   Token-Level Cost Tracking\
+-   Admin Analytics\
+-   Multi-session Conversations
+
+------------------------------------------------------------------------
+
+# 🎯 Production-Ready AI Backend
+
+This backend demonstrates:
+
+-   Secure API design\
+-   Enterprise RBAC\
+-   Database persistence\
+-   Cost-aware AI usage\
+-   Modular RAG pipeline\
+-   Scalable architecture
+
+------------------------------------------------------------------------
