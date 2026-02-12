@@ -52,60 +52,60 @@ PDF Knowledge Base
 ------------------------------------------------------------------------
 
 # 📁 Actual Project Structure
-
-ai_rag_chatbot_backend/
-│
-├── app.py                  # Main FastAPI application
-├── config.py               # Environment & configuration settings
-├── database.py             # PostgreSQL connection setup
-├── models.py               # SQLAlchemy models (Users, ChatHistory, TokenAnalytics)
-├── create_tables.py        # DB table creation script
-├── .env                    # Environment variables
-├── README.md
-│
-├── auth/                   # 🔐 Authentication & JWT
-│   ├── auth_router.py
-│   ├── dependencies.py
-│   ├── jwt.py
-│   ├── security.py
-│
-├── analytics/              # 📊 Token & Admin Analytics
-│   ├── analytics_router.py
-│   ├── analytics_service.py
-│
-├── memory/                 # 🧠 Conversation Memory
-│   ├── memory_manager.py
-│
-├── rag/                    # 📄 Retrieval-Augmented Generation
-│   ├── __init__.py
-│   ├── ingest.py
-│   ├── qa_chain.py
-│   ├── vectorstore.py
-│
-├── tools/                  # 🛠 AI Tools (Extensible)
-│   ├── calculator.py
-│   ├── weather_tool.py
-│   ├── web_search.py
-│
-├── streaming/              # ⚡ Streaming Support
-│
-├── utils/                  # 🔧 LLM Utilities
-│   ├── llm.py
-│
-├── data/                   # 📚 Source Documents (PDFs)
-│   ├── company_docs.pdf
-│   ├── SD0109_Chatbots.pdf
-│
-├── vectorstore/            # 🗂 ChromaDB Persistent Storage
-│   └── chroma/
-│       └── chroma.sqlite3  # Persistent vector database
-│
-├── logs/                   # 📝 Application Logs
-│   └── app.log
-│
-├── venv/                   # Python virtual environment
-└── __pycache__/
-
+```text
+  ai_rag_chatbot_backend/
+  │
+  ├── app.py                  # Main FastAPI application
+  ├── config.py               # Environment & configuration settings
+  ├── database.py             # PostgreSQL connection setup
+  ├── models.py               # SQLAlchemy models (Users, ChatHistory, TokenAnalytics)
+  ├── create_tables.py        # DB table creation script
+  ├── .env                    # Environment variables
+  ├── README.md
+  │
+  ├── auth/                   # 🔐 Authentication & JWT
+  │   ├── auth_router.py
+  │   ├── dependencies.py
+  │   ├── jwt.py
+  │   ├── security.py
+  │
+  ├── analytics/              # 📊 Token & Admin Analytics
+  │   ├── analytics_router.py
+  │   ├── analytics_service.py
+  │
+  ├── memory/                 # 🧠 Conversation Memory
+  │   ├── memory_manager.py
+  │
+  ├── rag/                    # 📄 Retrieval-Augmented Generation
+  │   ├── __init__.py
+  │   ├── ingest.py
+  │   ├── qa_chain.py
+  │   ├── vectorstore.py
+  │
+  ├── tools/                  # 🛠 AI Tools (Extensible)
+  │   ├── calculator.py
+  │   ├── weather_tool.py
+  │   ├── web_search.py
+  │
+  ├── streaming/              # ⚡ Streaming Support
+  │
+  ├── utils/                  # 🔧 LLM Utilities
+  │   ├── llm.py
+  │
+  ├── data/                   # 📚 Source Documents (PDFs)
+  │   ├── company_docs.pdf
+  │   ├── SD0109_Chatbots.pdf
+  │
+  ├── vectorstore/            # 🗂 ChromaDB Persistent Storage
+  │   └── chroma/
+  │       └── chroma.sqlite3  # Persistent vector database
+  │
+  ├── logs/                   # 📝 Application Logs
+  │   └── app.log
+  │
+  ├── venv/                   # Python virtual environment
+  └── __pycache__/
+  ```
 
 ------------------------------------------------------------------------
 
